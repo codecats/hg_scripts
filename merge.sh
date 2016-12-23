@@ -12,6 +12,6 @@ for i in $lst;
 do
     hg checkout $i
     hg merge $1
-    hg commit -m "Merge"
+    hg commit -m "Merge with $1"
 done
 hg checkout $1

@@ -4,7 +4,7 @@ if [ -z "$1" ]; then
 fi
 
 #check if feature branch exists
-exists=$(hg log -b -r "head() and not closed()" $1 | python -c "import sys; print sys.stdin.read()")
+exists=$(hg log -b $1 -r "head() and not closed()" | python -c "import sys; print sys.stdin.read()")
 if [ -z "$exists" ]; then
     echo "Error no branch $1"
     exit 1
@@ -32,3 +32,5 @@ hg commit -m "Merge"
 #close feature
 hg checkout $1
 hg commit --close-branch -m "Close"
+hg commit
+hg checkout $base_branch
