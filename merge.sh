@@ -1,9 +1,11 @@
-if [ -z "$branch" ]; then
-    branch=$(hg heads . --template "{branch}\n")
+#current branch
+branch=$1
+if [ -z "$1" ]; then
+	branch=$(hg heads . --template "{branch}\n")
 fi
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 user=$(cat "$DIR/user.txt")
-
+readarray -t lst < <( hg log --user "$user" -r "children(branch($branch))" --template "{branch}\n" | python -c "import sys; print ' '.join(set([l for l in sys.stdin.read().splitlines()]))")
 my_lst=()
 for i in $lst
 do
