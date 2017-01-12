@@ -21,7 +21,7 @@ do
 	opened=$(hg log -r "not closed() and (last(branch($i)))" --template "{branch}")
 	last_merge=$(hg log -r "last(parents(last(merge() and branch($i))))" --template "{branch}")
 
-	if [ ! -z "$last_merge" ] && [ "$last_merge" != "$branch" ]; then
+	if [ ! -z "$last_merge" ] && [ "$last_merge" != "$branch" ] && [ "$last_merge" != "$i" ]; then
 		opened=''
 	fi
 
