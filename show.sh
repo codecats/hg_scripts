@@ -29,8 +29,8 @@ do
 		lst+=' '$i
 	fi
 done
-echo 'Author (in sprint: '$branch')'
-echo $user
+echo -e 'Author (in sprint: \e[33m'$branch'\x1B[0m)'
+echo -e '\033[31m'$user'\x1B[0m'
 echo ''
 for i in $lst;
 do
