@@ -5,6 +5,9 @@ if [ -z "$1" ]; then
 fi
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 user=$(cat "$DIR/user.txt")
+echo -e 'Author (in sprint: \e[33m'$branch'\x1B[0m)'
+echo -e '\033[31m'$user'\x1B[0m'
+echo ''
 readarray -t lst < <( hg log --user "$user" -r "children(branch($branch))" --template "{branch}\n" | python -c "import sys; print ' '.join(set([l for l in sys.stdin.read().splitlines()]))")
 my_lst=()
 for i in $lst
@@ -29,9 +32,7 @@ do
 		lst+=' '$i
 	fi
 done
-echo -e 'Author (in sprint: \e[33m'$branch'\x1B[0m)'
-echo -e '\033[31m'$user'\x1B[0m'
-echo ''
+
 for i in $lst;
 do
     echo $i
