@@ -38,5 +38,15 @@ do
 done
 
 if [ -z "$lst" ]; then
-	echo '---'
+	empty=(" " " " " " "e" "m" "p" "t" "y" " " " " " " " ")
+
+	#echo ${empty[0]}
+	#for a in "${empty[@]}"; do echo "$a"; done
+	for i in {16..21} {21..16} ; do 
+		echo -en "\e[48;5;${i}m${empty[0]}\e[0m" ; 
+		unset empty[0]
+		empty=( "${empty[@]}" )
+	done ; 
+	echo $empty
+	echo
 fi
