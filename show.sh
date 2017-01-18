@@ -5,6 +5,7 @@ if [ -z "$1" ]; then
 fi
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 user=$(cat "$DIR/user.txt")
+exclude=$(cat "$DIR/exclude.txt")
 echo -e 'Author (in sprint: \e[33m'$branch'\x1B[0m)'
 echo -e '\033[31m'$user'\x1B[0m'
 echo ''
@@ -15,7 +16,10 @@ do
 	author=$(hg log -r "first(branch('$i'))" --template "{author}")
 	if [ "$user" == "$author" ];
 		then
-			my_lst+=' '$i
+			if [[ ! " ${exclude[@]} " =~ " ${i} " ]]; then
+			    my_lst+=' '$i
+			fi
+			
 	fi
 done
 lst=()

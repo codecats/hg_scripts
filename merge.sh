@@ -5,6 +5,7 @@ if [ -z "$1" ]; then
 fi
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 user=$(cat "$DIR/user.txt")
+exclude=$(cat "$DIR/exclude.txt")
 readarray -t lst < <( hg log --user "$user" -r "children(branch($branch))" --template "{branch}\n" | python -c "import sys; print ' '.join(set([l for l in sys.stdin.read().splitlines()]))")
 my_lst=()
 for i in $lst
@@ -12,7 +13,9 @@ do
 	author=$(hg log -r "first(branch('$i'))" --template "{author}")
 	if [ "$user" == "$author" ];
 		then
-			my_lst+=' '$i
+			if [[ ! " ${exclude[@]} " =~ " ${i} " ]]; then
+			    my_lst+=' '$i
+			fi
 	fi
 done
 lst=()
